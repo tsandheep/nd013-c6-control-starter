@@ -226,7 +226,10 @@ int main ()
   **/
 
   PID pid_steer = PID();
+  pid_steer.Init(0.32, 0.003, 0.1, 1.2, -1.2);
+
   PID pid_throttle = PID();
+  pid_throttle.Init(0.2, 0.0009, 0.1, 1.0, -1.0);
 
   h.onMessage([&pid_steer, &pid_throttle, &new_delta_time, &timer, &prev_timer, &i, &prev_timer](uWS::WebSocket<uWS::SERVER> ws, char *data, size_t length, uWS::OpCode opCode)
   {
@@ -289,7 +292,7 @@ int main ()
           * TODO (step 3): uncomment these lines
           **/
 //           // Update the delta time with the previous command
-//           pid_steer.UpdateDeltaTime(new_delta_time);
+          pid_steer.UpdateDeltaTime(new_delta_time);
 
           // Compute steer error
           double error_steer;
